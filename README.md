@@ -30,7 +30,7 @@ In order to install the NSS-TODO-List (extended) application:
 <ul>
 <li>Open project with eclipse from the same directory as downloaded project path</li>
 <li> Give <strong>webDriverPath</strong> path to your WebDiver</li>
-<h3> Also change the following variable values to path of the project:</h3>
+<h3> Also change the following variable values to your desired path and according to your environment:</h3>
 <li><strong>webDriverPath</strong></li>
 <li><strong>baseUrl</strong></li> 
 <li><strong>reportDest</strong></li> 
