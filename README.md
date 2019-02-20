@@ -11,7 +11,7 @@ All test cases will have snopshot at every steps and test result will be generet
 
 
 
-<h3>Setup:</h3>
+<h3> Environment Setup:</h3>
 
 In order to install the NSS-TODO-List (extended) application:
 <ul>
@@ -23,10 +23,12 @@ In order to install the NSS-TODO-List (extended) application:
 <li><strong>Note:</strong> You may want to explore your file read/write permissions on your local file system.</li>
 <li>Go to http://localhost/nss-todo-automation/index.php (or whatever name you have given to the folder containing all of the project files) and access the application.</li>
 <li>Get Selenium Chrome WebDriver</li>
+<li>Download and install Eclipse</li>
 </ul>
 
-Change the following directories according to your enviroment: 
+<h3> Execution instructions::</h3>
 <ul>
+<li>Open project with eclipse from the same directory as downloaded project path</li>
 <li> Give <strong>webDriverPath</strong> path to your WebDiver</li>
 <li><strong>webDriverPath</strong></li>
 <li><strong>baseUrl</strong></li> 
