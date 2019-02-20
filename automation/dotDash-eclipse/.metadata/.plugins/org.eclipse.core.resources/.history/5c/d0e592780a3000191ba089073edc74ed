@@ -1,0 +1,105 @@
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class LogInPage extends Accessories {
+	private static final String url = "https://dev.workmarket.com/login";
+	private static final String userName = "qa+candidatetest@workmarket.com";
+	private static final String pass = "candidate123";
+	
+	private WebDriver chromeWebDriver;
+	
+	private WebElement userNameTextField;
+	private WebElement passTextField;
+	private WebElement logInButton;
+	private WebElement findTalentLink;
+	private WebElement searchBar;
+	
+	
+	
+	public LogInPage(WebDriver webDriver) throws IOException {
+		chromeWebDriver = webDriver;
+		
+		writeReportHeader();
+		
+		loadPageInitElements();
+		
+		logInToAccount();
+		
+		searchForTalent();
+		//
+		
+	}
+	
+	private void loadPageInitElements() {
+		// Load Log in main page
+		chromeWebDriver.get(url);
+
+		// Wait for page to load
+		chromeWebDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		// Init WebElements
+		userNameTextField = chromeWebDriver.findElement(By.name("userEmail"));
+		passTextField = chromeWebDriver.findElement(By.name("password"));
+		logInButton = chromeWebDriver.findElement(By.id("login_page_button"));
+	}
+	
+	private void logInToAccount() {
+		inputTextWebElement(chromeWebDriver, userNameTextField, userName);
+		inputTextWebElement(chromeWebDriver, passTextField, pass);
+		clickOnWebElement(chromeWebDriver, logInButton);
+		
+		// Wait for page to load
+		chromeWebDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		
+	}
+	
+	private void searchForTalent() {
+		findTalentLink = chromeWebDriver.findElement(By.linkText("Find Talent"));
+		clickOnWebElement(chromeWebDriver, findTalentLink);
+		
+		searchBar = chromeWebDriver.findElement(By.id("input-text"));
+		inputTextWebElement(chromeWebDriver, searchBar, "test");
+		inputTextWebElement(chromeWebDriver, searchBar, Keys.ENTER+"");
+		// Wait for page to load
+		chromeWebDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		List <WebElement> searchResult = chromeWebDriver.findElements(By.id("search_results"));
+//		List <WebElement> divList = searchResult.findElements(By.className("div"));
+
+	
+//		
+		WebElement profileCard = searchResult.get(0);
+		System.out.println("AAA "+ profileCard.getText());
+		
+		
+		// Check first page only
+//		for (int i = 0; i < 50; i++) {
+//			System.out.println(i);
+			
+//			System.out.println(searchResult.get(i).findElement(By.className("profile-card")).findElement(By.className("profile-card--details")).findElement(By.className("h2")));
+			
+//			WebElement h2WebELement = searchResult.get(i).findElement(By.tagName("h2"));
+//			if (!h2WebELement.getText().toLowerCase().contains("test")) {
+//				System.out.println("Failed " + h2WebELement.getText());
+//			} else {
+//				System.out.println("Passed" + h2WebELement.getText());
+//			}
+//		}
+//		for (WebElement webElement : searchResult) {
+//			WebElement h2WebELement = webElement.findElement(By.tagName("h2"));
+//			if (!h2WebELement.getText().toLowerCase().contains("test")) {
+//				System.out.println("Failed " + h2WebELement.getText());
+//			} else {
+//				System.out.println("Passed" + h2WebELement.getText());
+//			}
+//			chromeWebDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+//		}
+	}
+}

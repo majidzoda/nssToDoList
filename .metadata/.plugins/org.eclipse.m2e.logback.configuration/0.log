@@ -1,0 +1,37 @@
+2019-02-14 03:27:02,764 [Worker-2: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2019-02-14 03:28:03,666 [Worker-7: Auto share git projects] WARN  org.eclipse.jgit.util.FS - Exception caught during execution of command '[git, --version]' in '/usr/bin', return code '72', error message '2019-02-14 03:28:02.632 xcodebuild[6198:256339] [MT] DVTPlugInLoading: Failed to load code for plug-in com.apple.dt.IDE.DVTKitDFRSupport (/Applications/Xcode.app/Contents/PlugIns/DVTKitDFRSupport.ideplugin), error = Error Domain=NSCocoaErrorDomain Code=3588 "dlopen(/Applications/Xcode.app/Contents/PlugIns/DVTKitDFRSupport.ideplugin/Contents/MacOS/DVTKitDFRSupport, 265): Symbol not found: _OBJC_IVAR_$_NSTextViewIvars.sharedData
+  Referenced from: /Applications/Xcode.app/Contents/Developer/usr/bin/../../../SharedFrameworks/DVTKit.framework/Versions/A/DVTKit
+  Expected in: /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit
+ in /Applications/Xcode.app/Contents/Developer/usr/bin/../../../SharedFrameworks/DVTKit.framework/Versions/A/DVTKit" UserInfo={NSLocalizedFailureReason=The bundle couldnât be loaded., NSLocalizedRecoverySuggestion=Try reinstalling the bundle., NSFilePath=/Applications/Xcode.app/Contents/PlugIns/DVTKitDFRSupport.ideplugin/Contents/MacOS/DVTKitDFRSupport, NSDebugDescription=dlopen(/Applications/Xcode.app/Contents/PlugIns/DVTKitDFRSupport.ideplugin/Contents/MacOS/DVTKitDFRSupport, 265): Symbol not found: _OBJC_IVAR_$_NSTextViewIvars.sharedData
+  Referenced from: /Applications/Xcode.app/Contents/Developer/usr/bin/../../../SharedFrameworks/DVTKit.framework/Versions/A/DVTKit
+  Expected in: /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit
+ in /Applications/Xcode.app/Contents/Developer/usr/bin/../../../SharedFrameworks/DVTKit.framework/Versions/A/DVTKit, NSBundlePath=/Applications/Xcode.app/Contents/PlugIns/DVTKitDFRSupport.ideplugin, NSLocalizedDescription=The bundle âDVTKitDFRSupportâ couldnât be loaded.}, dyldError = dlopen(/Applications/Xcode.app/Contents/PlugIns/DVTKitDFRSupport.ideplugin/Contents/MacOS/DVTKitDFRSupport, 0): Symbol not found: _OBJC_IVAR_$_NSTextViewIvars.sharedData
+  Referenced from: /Applications/Xcode.app/Contents/Developer/usr/bin/../../../SharedFrameworks/DVTKit.framework/Versions/A/DVTKit
+  Expected in: /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit
+ in /Applications/Xcode.app/Contents/Developer/usr/bin/../../../SharedFrameworks/DVTKit.framework/Versions/A/DVTKit
+2019-02-14 03:28:02.633 xcodebuild[6198:256339] [MT] DVTPlugInExtensionFaulting: Failed to fire fault for extension Xcode.DVTKitDFRSupport.Initializer: Error Domain=DVTPlugInErrorDomain Code=2 "Loading a plug-in failed." UserInfo={DVTPlugInIdentifierErrorKey=com.apple.dt.IDE.DVTKitDFRSupport, DVTPlugInExecutablePathErrorKey=/Applications/Xcode.app/Contents/PlugIns/DVTKitDFRSupport.ideplugin/Contents/MacOS/DVTKitDFRSupport, NSLocalizedRecoverySuggestion=The plug-in or one of its prerequisite plug-ins may be missing or damaged and may need to be reinstalled., DVTPlugInDYLDErrorMessageErrorKey=dlopen(/Applications/Xcode.app/Contents/PlugIns/DVTKitDFRSupport.ideplugin/Contents/MacOS/DVTKitDFRSupport, 0): Symbol not found: _OBJC_IVAR_$_NSTextViewIvars.sharedData
+  Referenced from: /Applications/Xcode.app/Contents/Developer/usr/bin/../../../SharedFrameworks/DVTKit.framework/Versions/A/DVTKit
+  Expected in: /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit
+ in /Applications/Xcode.app/Contents/Developer/usr/bin/../../../SharedFrameworks/DVTKit.framework/Versions/A/DVTKit, NSLocalizedDescription=Loading a plug-in failed., NSFilePath=/Applications/Xcode.app/Contents/PlugIns/DVTKitDFRSupport.ideplugin, NSLocalizedFailureReason=The plug-in âcom.apple.dt.IDE.DVTKitDFRSupportâ at path â/Applications/Xcode.app/Contents/PlugIns/DVTKitDFRSupport.idepluginâ could not be loaded.  The plug-in or one of its prerequisite plug-ins may be missing or damaged., NSUnderlyingError=0x7fefe116a370 {Error Domain=NSCocoaErrorDomain Code=3588 "dlopen(/Applications/Xcode.app/Contents/PlugIns/DVTKitDFRSupport.ideplugin/Contents/MacOS/DVTKitDFRSupport, 265): Symbol not found: _OBJC_IVAR_$_NSTextViewIvars.sharedData
+  Referenced from: /Applications/Xcode.app/Contents/Developer/usr/bin/../../../SharedFrameworks/DVTKit.framework/Versions/A/DVTKit
+  Expected in: /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit
+ in /Applications/Xcode.app/Contents/Developer/usr/bin/../../../SharedFrameworks/DVTKit.framework/Versions/A/DVTKit" UserInfo={NSLocalizedFailureReason=The bundle couldnât be loaded., NSLocalizedRecoverySuggestion=Try reinstalling the bundle., NSFilePath=/Applications/Xcode.app/Contents/PlugIns/DVTKitDFRSupport.ideplugin/Contents/MacOS/DVTKitDFRSupport, NSDebugDescription=dlopen(/Applications/Xcode.app/Contents/PlugIns/DVTKitDFRSupport.ideplugin/Contents/MacOS/DVTKitDFRSupport, 265): Symbol not found: _OBJC_IVAR_$_NSTextViewIvars.sharedData
+  Referenced from: /Applications/Xcode.app/Contents/Developer/usr/bin/../../../SharedFrameworks/DVTKit.framework/Versions/A/DVTKit
+  Expected in: /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit
+ in /Applications/Xcode.app/Contents/Developer/usr/bin/../../../SharedFrameworks/DVTKit.framework/Versions/A/DVTKit, NSBundlePath=/Applications/Xcode.app/Contents/PlugIns/DVTKitDFRSupport.ideplugin, NSLocalizedDescription=The bundle âDVTKitDFRSupportâ couldnât be loaded.}}}
+** INTERNAL ERROR: Uncaught exception **
+Uncaught Exception: Error getting value for key 'initializationClass' of extension 'Xcode.DVTKitDFRSupport.Initializer' in plug-in 'com.apple.dt.IDE.DVTKitDFRSupport'
+Stack:
+  0   __exceptionPreprocess (in CoreFoundation)
+  1   objc_exception_throw (in libobjc.A.dylib)
+  2   -[DVTExtension valueForKey:error:] (in DVTFoundation)
+  3   _IDEInitializeOnePlugInAndPrerequisites (in IDEFoundation)
+  4   _IDEInitializePlugIns (in IDEFoundation)
+  5   IDEInitialize (in IDEFoundation)
+  6   -[Xcode3CommandLineBuildTool run] (in Xcode3Core)
+  7  0x00000001020d2202 (in xcodebuild)
+  8   start (in libdyld.dylib)
+
+sh: line 1:  6200 Abort trap: 6           /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -sdk macosx -find git 2> /dev/null
+git: error: unable to find utility "git", not a developer tool or in PATH
+'

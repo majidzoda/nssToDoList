@@ -1,0 +1,87 @@
+import org.apache.commons.validator.EmailValidator;
+
+
+public class IndividualProfile {
+	
+	// Fields
+	private String firstName;
+	private String lastName;
+	private String email;
+	private String password;
+	private boolean terms;
+	
+	private boolean isFirstNameValid;
+	private boolean isLastNameValid;
+	private boolean isEmailValid;
+	private boolean isPasswordValid;
+	
+	// Const
+	public IndividualProfile() {
+		firstName = "";
+		lastName = "";
+		email = "";
+		password = "";
+		terms = false;
+	}
+	
+	
+	// Setters
+	public void setFirstName (String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public void setLastName (String lastName) {
+		this.lastName = lastName;
+	}
+	
+	public void setEmail (String email) {
+		this.email = email;
+	}
+	
+	public void setPassword (String password) {
+		this.password = password;
+	}
+	
+	public void setTerms (boolean terms) {
+		this.terms = terms;
+	}
+	
+	
+	
+	// Accessories
+	private boolean isNameValid(String name) {
+		if (name.length() > 0 && 
+				!(name.equals(" ")) &&
+					name.matches("[a-zA-Z]+")) {
+			return true;
+		}
+		return false;
+	}
+	
+
+	private boolean validateEmail(String email) {
+		return EmailValidator.getInstance().isValid(email); 
+	}
+	
+	public boolean isFirstNameValid() {
+		return isNameValid(firstName);
+	}
+	
+	public boolean isLastNameValid() {
+		return isNameValid(lastName);
+	}
+	
+	public boolean isEmailValid() {
+		return validateEmail(email);
+	}
+	
+	public boolean isPasswordValid() {
+		if (password.length() >= 8 &&
+				password.matches("[0-9]")) {
+			return true;
+		}
+		return false;
+	}
+	
+	 
+}

@@ -1,0 +1,30 @@
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class MainClass {
+	private static final String webDriverPath = "/Users/firdavsiimajidzoda/Documents/chromedriver";
+	
+	public static void main(String[] args) {
+		System.setProperty("webdriver.chrome.driver", webDriverPath);
+		
+		// Initialize Web driver
+		WebDriver webDriver = new ChromeDriver();
+		
+//		SignUpPage signUpPage = new SignUpPage(webDriver);
+		
+		
+		
+		
+		
+		
+		IndividualProfile profile = IndividualProfile.getInstance();
+		profile.setEmail("fira.n92@gmail.com");
+		System.out.println(profile.isEmailValid());
+		
+//		profile.writeReportHeader();
+		
+		
+
+	}
+
+}

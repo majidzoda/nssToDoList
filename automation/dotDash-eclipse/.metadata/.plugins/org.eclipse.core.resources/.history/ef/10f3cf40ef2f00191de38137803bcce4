@@ -1,0 +1,455 @@
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class SignUpPage extends Accessories{
+	private WebDriver chromeWebDriver;
+	
+	private WebElement joinIndButton;
+	private WebElement firstNameTextField;
+	private WebElement lastNameTextField;
+	private WebElement emailTextField;
+	private WebElement passwordTextField;
+	private WebElement termsCheckBox;
+	private WebElement registerButton;
+	
+	public SignUpPage(WebDriver webDriver) throws Exception {
+		chromeWebDriver = webDriver;
+		
+		writeReportHeader();
+		
+		loadPageInitElements();
+		
+//		testFirstNameTextFieldCases();
+		
+//		testLastNameTextFieldCases();
+		
+//		testEmailTextFieldCases();
+		
+//		testPasswordTextFieldCases();
+		
+		
+		testRegisterCases();
+		
+		
+	}
+
+	
+	private void loadPageInitElements() {
+		// Load main page
+		chromeWebDriver.get(url);
+
+		// Wait for page to load
+		chromeWebDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		
+		// Init Join as an individual Button
+		joinIndButton = findWebElementInList(chromeWebDriver, "button", "", "JOIN AS AN INDIVIDUAL", true);
+		
+		// Click on JOIN AS AN INDIVIDUAL Button
+		clickOnWebElement(chromeWebDriver, joinIndButton);
+		
+		// Init text fields
+		firstNameTextField = chromeWebDriver.findElement(By.name("firstName"));
+		lastNameTextField = chromeWebDriver.findElement(By.name("lastName"));
+		emailTextField = chromeWebDriver.findElement(By.name("email"));
+		passwordTextField = chromeWebDriver.findElement(By.name("password"));
+		firstNameTextField = chromeWebDriver.findElement(By.name("firstName"));
+		
+		// Init Terms CheckBox 
+		termsCheckBox = findWebElementInList(chromeWebDriver, "input", "type", "checkbox", false);
+		
+		// Init Register Button
+		registerButton = findWebElementInList(chromeWebDriver, "button", "", "REGISTER", true);	
+		
+	}
+	
+	
+	private void testFirstNameTextFieldCases() throws Exception {
+		String errorPrompt = "Please enter a valid first name";
+
+		IndividualProfile profile = IndividualProfile.getInstance();
+		profile.clearProfile();
+		fillProfile(profile);
+		
+		// Test Case: 1.1 (FirstName 1 character only) +
+		profile.setFirstName("A");
+		testTextFields(profile, "TC1.1", errorPrompt, profile.isLastNameValid());
+		
+		// Test Case: 1.2 (FirstName 2+ characters only) +
+		profile.setFirstName("Ab");
+		testTextFields(profile, "TC1.2", errorPrompt, profile.isLastNameValid());
+		
+		// Test Case: 1.3 (FirstName Many characters) +
+		profile.setFirstName("Abraham");
+		testTextFields(profile, "TC1.3", errorPrompt, profile.isLastNameValid());
+		
+		// Negative testing
+		// Test Case: 1.4 (FirstName "" (empty) no character at all) -
+		profile.setFirstName("");
+		negativeTestTextFields(profile, "TC1.4", errorPrompt, profile.isLastNameValid());
+		
+		// Test Case: 1.5 (FirstName " " (space) character only) -
+		profile.setFirstName(" ");
+		negativeTestTextFields(profile, "TC1.5", errorPrompt, profile.isLastNameValid());
+		
+		// Test Case: 1.6 (FirstName "1" (Numeric) character only) -
+		profile.setFirstName("1");
+		negativeTestTextFields(profile, "TC1.6", errorPrompt, profile.isLastNameValid());
+		
+		// Test Case: 1.7 (FirstName "12" (Numeric) 2 numeric characters) -
+		profile.setFirstName("12");
+		negativeTestTextFields(profile, "TC1.7", errorPrompt, profile.isLastNameValid());
+		
+		// Test Case: 1.8 (FirstName "Abraham1" (Alpha-numeric) characters) -
+		profile.setFirstName("Abraham1");
+		negativeTestTextFields(profile, "TC1.8", errorPrompt, profile.isLastNameValid());
+		
+		// Test Case: 1.9 (FirstName "&" 1 (Special character) only) -
+		profile.setFirstName("&");
+		negativeTestTextFields(profile, "TC1.9", errorPrompt, profile.isLastNameValid());
+		
+		// Test Case: 1.10 (FirstName "&!" 2 (Special characters)) -
+		profile.setFirstName("&!");
+		negativeTestTextFields(profile, "TC1.10", errorPrompt, profile.isLastNameValid());
+		
+		// Test Case: 1.11 (FirstName "&!&*()" many (Special characters)) -
+		profile.setFirstName("&!&*()");
+		negativeTestTextFields(profile, "TC1.11", errorPrompt, profile.isLastNameValid());
+		
+		// Test Case: 1.12 (FirstName "Abraham1*"  (alpha-numeric and special characters)) -
+		profile.setFirstName("Abraham1*");
+		negativeTestTextFields(profile, "TC1.12", errorPrompt, profile.isLastNameValid());
+		
+	}
+	
+	private void testLastNameTextFieldCases() throws Exception {
+		String errorPrompt = "Please enter a valid last name";
+
+		IndividualProfile profile = IndividualProfile.getInstance();
+		profile.clearProfile();
+		fillProfile(profile);
+		
+		// Test Case: 1.13 (LastName 1 character only) +
+		profile.setLastName("L");
+		testTextFields(profile, "TC1.13", errorPrompt, profile.isFirstNameValid());
+
+		// Test Case: 1.14 (LastName 2+ characters only) +
+		profile.setLastName("Li");
+		testTextFields(profile, "TC1.14", errorPrompt, profile.isFirstNameValid());
+		
+		// Test Case: 1.15 (LastName Many characters) +
+		profile.setLastName("Lincoln");
+		testTextFields(profile, "TC1.15", errorPrompt, profile.isFirstNameValid());
+		
+		// Negative testing
+		// Test Case: 1.16 (LastName "" (empty) no character at all) -
+		profile.setLastName("");
+		negativeTestTextFields(profile, "TC1.16", errorPrompt, profile.isFirstNameValid());
+		
+		// Test Case: 1.17 (LastName " " (space) character only) -
+		profile.setLastName(" ");
+		negativeTestTextFields(profile, "TC1.17", errorPrompt, profile.isFirstNameValid());
+		
+		// Test Case: 1.18 (LastName "1" (Numeric) character only) -
+		profile.setLastName("1");
+		negativeTestTextFields(profile, "TC1.18", errorPrompt, profile.isFirstNameValid());
+		
+		// Test Case: 1.19 (LastName "12" (Numeric) 2 numeric characters) -
+		profile.setLastName("12");
+		negativeTestTextFields(profile, "TC1.19", errorPrompt, profile.isFirstNameValid());
+		
+		// Test Case: 1.20 (LastName "Abraham1" (Alpha-numeric) characters) -
+		profile.setLastName("Lincoln1");
+		negativeTestTextFields(profile, "TC1.20", errorPrompt, profile.isFirstNameValid());
+		
+		// Test Case: 1.21 (LastName "&" 1 (Special character) only) -
+		profile.setLastName("&");
+		negativeTestTextFields(profile, "TC1.21", errorPrompt, profile.isFirstNameValid());
+		
+		// Test Case: 1.22 (LastName "&!" 2 (Special characters)) -
+		profile.setLastName("&!");
+		negativeTestTextFields(profile, "TC1.22", errorPrompt, profile.isFirstNameValid());
+		
+		// Test Case: 1.23 (LastName "&!&*()" many (Special characters)) -
+		profile.setLastName("&!&*()");
+		negativeTestTextFields(profile, "TC1.23", errorPrompt, profile.isFirstNameValid());
+		
+		// Test Case: 1.24 (LastName "Abraham1*"  (alpha-numeric and special characters)) -
+		profile.setLastName("Lincoln1*");
+		negativeTestTextFields(profile, "TC1.24", errorPrompt, profile.isFirstNameValid());
+		
+	}
+	
+	private void testEmailTextFieldCases() throws Exception {
+		String errorPrompt = "Please enter a valid email";
+
+		IndividualProfile profile = IndividualProfile.getInstance();
+		profile.clearProfile();
+		fillProfile(profile);
+
+		// Test Case: 1.25 (Email - valid email: john.smith@wm.com) +
+		profile.setEmail("abraham.lincoln@wm.com");
+		testTextFields(profile, "TC1.25", errorPrompt, profile.isEmailValid());
+
+		// Test Case: 1.26 (Email - valid email, alpha-numeric:  john.smith2019@gmail.com) +
+		profile.setEmail("abraham.lincoln2019@wm.com");
+		testTextFields(profile, "TC1.26", errorPrompt, profile.isEmailValid());
+		
+		// Test Case: 1.27 Email - valid email, alpha-numeric and special character:  john.smith2019#@gmail.com) +
+		profile.setEmail("abraham.lincoln2019#@wm.com");
+		testTextFields(profile, "TC1.27", errorPrompt, profile.isEmailValid());
+		
+		// Negative testing
+		// Test Case: 1.28 (Email - invalid email, "" (empty email)) -
+		profile.setEmail("");
+		negativeTestTextFields(profile, "TC1.28", errorPrompt, profile.isEmailValid());
+		
+		// Test Case: 1.29 (Email - invalid email, " " (space)) -
+		profile.setEmail(" ");
+		negativeTestTextFields(profile, "TC1.29", errorPrompt, profile.isEmailValid());
+		
+		// Test Case: 1.31 (Email - invalid email, 1 character only, without domain) -
+		profile.setEmail("a");
+		negativeTestTextFields(profile, "TC1.31", errorPrompt, profile.isEmailValid());
+		
+		// Test Case: 1.31 (Email - invalid email, 2 character without domain) -
+		profile.setEmail("ab");
+		negativeTestTextFields(profile, "TC1.31", errorPrompt, profile.isEmailValid());
+		
+		// Test Case: 1.32 (Email - invalid email, many character without domain) -
+		profile.setEmail("abraham.lincoln");
+		negativeTestTextFields(profile, "TC1.32", errorPrompt, profile.isEmailValid());
+		
+		// Test Case: 1.33 (Email - invalid email, many character with (@) at sign only) -
+		profile.setEmail("abraham.lincoln@");
+		negativeTestTextFields(profile, "TC1.33", errorPrompt, profile.isEmailValid());
+		
+		// Test Case: 1.34 (Email - invalid email, many character with (@) and domain but without .extension) -
+		profile.setEmail("abraham.lincoln@wm");
+		negativeTestTextFields(profile, "TC1.34", errorPrompt, profile.isEmailValid());
+		
+		// Test Case: 1.35 (Email - invalid email, many character with (@), domain and just dot(.)) -
+		profile.setEmail("abraham.lincoln@wm.");
+		negativeTestTextFields(profile, "TC1.35", errorPrompt, profile.isEmailValid());
+		
+		// Test Case: 1.36 (Email - invalid email, many character with (@), domain, dot(.) and 1 character after dot) -
+		profile.setEmail("abraham.lincoln@wm.c");
+		negativeTestTextFields(profile, "TC1.36", errorPrompt, profile.isEmailValid());
+		
+		// Test Case: 1.37 (Email - invalid email, many character with (@), domain, dot(.) and many characters after dot) -
+		profile.setEmail("abraham.lincoln@wm.com");
+		negativeTestTextFields(profile, "TC1.37", errorPrompt, profile.isEmailValid());
+	}
+	
+	private void testPasswordTextFieldCases() throws Exception {
+		String errorPrompt = "Please enter a valid password";
+
+		IndividualProfile profile = IndividualProfile.getInstance();
+		profile.clearProfile();
+		fillProfile(profile);
+
+		// Test Case: 1.38 (Password - valid password: candidate123, more than 8 characters and many number character) +
+		profile.setPassword("candidate123");
+		testTextFields(profile, "TC1.38", errorPrompt, profile.isPasswordValid());
+
+		// Test Case: 1.39 (Password - valid password: candidate1, more than 8 characters and one number character only) +
+		profile.setPassword("candidate1");
+		testTextFields(profile, "TC1.39", errorPrompt, profile.isPasswordValid());
+		
+		// Test Case: 1.40 (Password - valid password: candida1, more than 8 characters and one number character only) +
+		profile.setPassword("candida1");
+		testTextFields(profile, "TC1.40", errorPrompt, profile.isPasswordValid());
+		
+		// Test Case: 1.41 (Password - valid password: "!@#$%^&1" 8 characters exact and 1 numeric character) +
+		profile.setPassword("!@#$%^&1");
+		testTextFields(profile, "TC1.41", errorPrompt, profile.isPasswordValid());
+		
+		// Test Case: 1.42 (Password - valid password: "abc$%^&1" 8 characters exact mix of alpha-numeric and special characters) +
+		profile.setPassword("abc$%^&1");
+		testTextFields(profile, "TC1.42", errorPrompt, profile.isPasswordValid());
+		
+		// Negative testing
+		// Test Case: 1.43 (Password - invalid password: "" (empty)) -
+		profile.setPassword("");
+		negativeTestTextFields(profile, "TC1.43", errorPrompt, profile.isPasswordValid());
+		
+		// Test Case: 1.44 (Password - invalid password: " " (space)) -
+		profile.setPassword(" ");
+		negativeTestTextFields(profile, "TC1.44", errorPrompt, profile.isPasswordValid());
+		
+		// Test Case: 1.45 (Password - invalid password: "candidat" 8 characters exact and no numeric) -
+		profile.setPassword("candidat");
+		negativeTestTextFields(profile, "TC1.45", errorPrompt, profile.isPasswordValid());
+		
+		// Test Case: 1.46 (Password - invalid password: "candidat!" 9 characters exact and 1 special character) -
+		profile.setPassword("candidat!");
+		negativeTestTextFields(profile, "TC1.46", errorPrompt, profile.isPasswordValid());
+		
+		// Test Case: 1.47 (Password - invalid password: "!@#$%^&1" 9 special characters and 1 numeric character) -
+		profile.setPassword("!@#$%^&1");
+		negativeTestTextFields(profile, "TC1.47", errorPrompt, profile.isPasswordValid());
+		
+		// Test Case: 1.48 (Password - invalid password: "candid1" 7 characters exact and 1 numeric character) -
+		profile.setPassword("!@#$%^&1");
+		negativeTestTextFields(profile, "TC1.48", errorPrompt, profile.isPasswordValid());
+	}
+	
+	
+	/**
+	 * 
+	 * @throws Exception 
+	 */
+	private void testTextFields(IndividualProfile profile, String TC, String errorPrompt, boolean isProfileAttValid) throws Exception {
+		// Get current time for a file name
+		String fileName = getTimeForFileName();
+		
+		// Init status
+		String status = "";
+		
+		// Fill profile inputs
+		fillProfile(profile);
+		
+		// Click on Body to loose focus
+		clickOnWebElement(chromeWebDriver, chromeWebDriver.findElement(By.tagName("body")));
+		
+		if (findWebElementInList(chromeWebDriver, "div", "", errorPrompt, true) != null // Check if error prompt was populated
+				&& !isProfileAttValid ) { // Is firstName is a valid name
+			status = "Failed"; // Failed
+		} else {
+			status = "Passed"; // Passed
+		}
+		
+		// Write report to the file
+		writeToFile(new String[] { TC, status, fileName });
+		
+		// Take a screen shot
+		takeFullScreenShot(chromeWebDriver, "Test-results/" + TC + "/" +TC + "-" + fileName);
+	}
+	
+	
+	
+	private void negativeTestTextFields(IndividualProfile profile, String TC, String errorPrompt, boolean isProfileAttValid) throws Exception {
+		// Get current time for a file name
+		String fileName = getTimeForFileName();
+		
+		// Init status
+		String status = "";
+		
+		// Fill profile inputs
+		fillProfile(profile);
+		
+		// Click on Body to loose focus
+		clickOnWebElement(chromeWebDriver, chromeWebDriver.findElement(By.tagName("body")));
+		
+		if (findWebElementInList(chromeWebDriver, "div", "", errorPrompt, true) != null // Check if error prompt was populated
+				&& !isProfileAttValid ) { // Is firstName is a valid name
+			status = "Passed"; // Passed
+		} else {
+			status = "Failed"; // Failed
+		}
+		
+		// Write report to the file
+		writeToFile(new String[] { TC, status, fileName });
+		
+		// Take a screen shot
+		takeFullScreenShot(chromeWebDriver, "Test-results/" + TC + "/" +TC + "-" + fileName);
+	}
+	
+	// Functionality Testing
+	private void testRegisterCases() throws Exception {
+		// Test Case: 1.49 (Profile - valid. All fields are valid, account must register) +
+		IndividualProfile profile = IndividualProfile.getInstance();
+		profile.clearProfile();
+		
+		profile.setFirstName("Abraham");
+		profile.setLastName("Lincoln");
+		profile.setEmail("abraham.lin@gmail.com");
+		profile.setPassword(getTimeForFileName());
+		profile.setTerms(true);
+		
+//		testRegisterFunction(profile, "TC1.49", "h2", "Thank You from CoName_6225");
+		
+		// Test Case: 1.49 (Profile - valid. All fields are valid, account must register) +
+		testRegisterFunction(profile, "TC1.50", "p", "The email address " + profile.getEmail()+ " is already being used.");
+	}
+	
+	/**
+	 * 
+	 * @throws Exception 
+	 */
+	private void testRegisterFunction(IndividualProfile profile, String TC, String tagName, String prompt) throws Exception {
+		
+		// Get current time for a file name
+		String fileName = getTimeForFileName();
+		
+		// Init status
+		String status = "";
+		
+		// Fill profile inputs
+		fillProfile(profile);
+		
+		System.out.println("register button enabled? " + registerButton.isEnabled());
+		System.out.println("Is profile valid? " + profile.isProfileValid());
+		
+		if (registerButton.isEnabled() 
+				&& profile.isProfileValid()) {
+			// Click and hold on Register button to take snapshot
+			clickAndHoldWebElement(chromeWebDriver, registerButton);
+			
+			// Take a screen shot
+			takeFullScreenShot(chromeWebDriver, "Test-results/" + TC + "/" +TC + "-" + fileName + "-1");
+			
+			releaseClickWebElement(chromeWebDriver, registerButton);
+			
+			// Wait for page to load
+			chromeWebDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+			
+			if (findWebElementInList(chromeWebDriver, tagName, "", prompt, true) != null) {
+				System.out.println("Message: " + findWebElementInList(chromeWebDriver, tagName, "", prompt, true).getText());
+				status = "passed";
+			} else {
+				status = "Stoppped, regestration did not go through";
+			}
+			status = "Passed";
+		} else {
+			status = "Failed";
+		}
+		
+		
+		
+		
+		
+		// Write report to the file
+		writeToFile(new String[] { TC, status, fileName });
+		
+		// Take a screen shot
+		takeFullScreenShot(chromeWebDriver, "Test-results/" + TC + "/" +TC + "-" + fileName + "- final");
+	}
+	
+	
+	/**
+	 * This method fills profile registration with given profile
+	 * @param profile - IndividualProfile
+	 */
+	private void fillProfile(IndividualProfile profile) {
+		clearTextField(chromeWebDriver, firstNameTextField);
+		inputTextWebElement(chromeWebDriver, firstNameTextField, profile.getFirstName());
+		
+		clearTextField(chromeWebDriver, lastNameTextField);
+		inputTextWebElement(chromeWebDriver, lastNameTextField, profile.getLastName());
+		
+		clearTextField(chromeWebDriver, emailTextField);
+		inputTextWebElement(chromeWebDriver, emailTextField, profile.getEmail());
+		
+		clearTextField(chromeWebDriver, passwordTextField);
+		inputTextWebElement(chromeWebDriver, passwordTextField, profile.getPassword());
+		
+		if (termsCheckBox.isSelected() != profile.getTerms()) {
+			clickOnWebElement(chromeWebDriver, termsCheckBox);
+		}
+	}
+}

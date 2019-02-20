@@ -1,0 +1,148 @@
+import org.apache.commons.validator.routines.EmailValidator;
+
+
+public class IndividualProfile extends Accessories{
+	
+	// Fields
+	private static IndividualProfile instance;
+	
+	private String firstName;
+	private String lastName;
+	private String email;
+	private String password;
+	private boolean terms;
+	
+	private boolean isFirstNameValid;
+	private boolean isLastNameValid;
+	private boolean isEmailValid;
+	private boolean isPasswordValid;
+	
+	// Const
+	private IndividualProfile() {
+		firstName = "";
+		lastName = "";
+		email = "";
+		password = "";
+		terms = false;
+	}
+	
+	// Get instance 
+	public static IndividualProfile getInstance() {
+		if (instance == null) {
+			return instance = new IndividualProfile();	
+		}
+		return instance;
+	}
+	
+	public void fillDefaultProfile() {
+		firstName = "John";
+		lastName = "Smith";
+		email = "john.smith@wm.com";
+		password = "candidate123";
+		terms = true;
+	}
+	
+	public void clearProfile() {
+		firstName = "";
+		lastName = "";
+		email = "";
+		password = "";
+		terms = false;
+	}
+	
+	
+	
+	// Setters
+	public void setFirstName (String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public void setLastName (String lastName) {
+		this.lastName = lastName;
+	}
+	
+	public void setEmail (String email) {
+		this.email = email;
+	}
+	
+	public void setPassword (String password) {
+		this.password = password;
+	}
+	
+	public void setTerms (boolean terms) {
+		this.terms = terms;
+	}
+	
+	// Getters
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public boolean getTerms() {
+		return terms;
+	}
+	
+	// Validation
+	private boolean isNameValid(String name) {
+		if (name.length() > 0 &&  // More than 1 character
+				!(name.equals(" ")) && // Can't be space
+					name.matches("[a-zA-Z]+")) { // Letters only
+			return true;
+		}
+		return false;
+	}
+	
+
+	private boolean validateEmail(String email) {
+		return EmailValidator.getInstance().isValid(email); 
+	}
+	
+	public boolean isFirstNameValid() {
+		return isNameValid(firstName);
+	}
+	
+	public boolean isLastNameValid() {
+		return isNameValid(lastName);
+	}
+	
+	public boolean isEmailValid() {
+		return validateEmail(email);
+	}
+	
+	public boolean isPasswordValid() {
+		if (password.length() >= 8 &&
+				password.matches("(.)*(\\\\d)(.)*")) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isTermsValid() {
+		return getTerms();
+	}
+	
+	public boolean isProfileValid() {
+		System.out.println("Is First Name valid: "+ isFirstNameValid());
+		System.out.println("Is Last Name valid: "+ isLastNameValid());
+		System.out.println("Is email valid: "+ isEmailValid());
+		System.out.println("Is pass valid: "+ isPasswordValid());
+		System.out.println("Is terms valid: "+ getTerms());
+		
+		
+		return isFirstNameValid() && isLastNameValid() && isEmailValid() && isPasswordValid() && getTerms();
+	}
+	
+	 
+}

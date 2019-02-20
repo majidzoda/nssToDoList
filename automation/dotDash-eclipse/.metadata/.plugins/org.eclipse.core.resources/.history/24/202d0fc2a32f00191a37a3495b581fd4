@@ -1,0 +1,14 @@
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		IndividualProfile profile = new IndividualProfile();
+		
+		profile.setEmail("fira@as.as");
+		System.out.println("Email: "+profile.email);
+		System.out.println(profile.isEmailValid());
+
+	}
+
+}

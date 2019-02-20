@@ -1,0 +1,142 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+
+public abstract class Accessories {
+	static final String url = "https://dev.workmarket.com/register/campaign/10081C503B209A0C8E7F05FDCC1AA98D4C904DEEF5F73265CAE38C744E7EAD3E";
+	static final String baseDirectory = "/Users/firdavsiimajidzoda/Documents/WorkMarket/";
+	static final String line = new String(new char[83]).replace('\0', '-');
+	public void clickOnWebElement(WebDriver webDriver, WebElement webElement) {
+
+		Actions builder = new Actions(webDriver);
+		Actions action = builder.moveToElement(webElement).click();
+		action.perform();
+	}
+	
+	public WebElement findWebElementInList(WebDriver webDriver, String tagName, String attr, String text, boolean getText) {
+		List <WebElement> listInputs = webDriver.findElements(By.tagName(tagName));
+		for (WebElement webElement : listInputs) {
+			if (getText) {
+				if (webElement.getText().equals(text)) {
+					return webElement;
+				}
+			} else {
+				if (webElement.getAttribute(attr).equals(text)) {
+					return webElement;
+				}
+			}	
+		}
+		return null;
+	}
+	
+	public static void clearTextField(WebDriver webDriver, WebElement textField) {
+		Actions builder = new Actions(webDriver);
+		Actions action = builder.moveToElement(textField).sendKeys(Keys.BACK_SPACE);
+
+		action.perform();
+		webDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+	}
+	
+	/**
+	 * This method inputs text in text field
+	 * 
+	 * @param webElement - Text Field WebElement
+	 * @param inputText  - input text
+	 */
+	public static void inputTextWebElement(WebDriver webDriver, WebElement webElement, String inputText) {
+		Actions builder = new Actions(webDriver);
+		Actions action = builder.moveToElement(webElement).click().sendKeys(inputText);
+		action.perform();
+	}
+	
+	/**
+	 * Writes the following header: ------------------------------------------- | TC
+	 * | Status | Date 12620194410 | -------------------------------------------
+	 * 
+	 * @throws IOException
+	 */
+	public static void writeReportHeader() throws IOException {
+		// Initialize PrintWriter
+		PrintWriter writer = new PrintWriter(new FileWriter(baseDirectory + "test-report.txt", true));
+
+		// Print line
+		writer.println(line);
+
+		// Print header with format
+		writer.printf("|%s|%s|%s|%n", StringUtils.center("TC", 7), StringUtils.center("Status", 50),
+				StringUtils.center("Date " + getTimeForFileName(), 22));
+
+		// Print line
+		writer.println(line);
+
+		// Flush and close writer
+		writer.flush();
+		writer.close();
+	}
+	
+	/**
+	 * This method writes Test Case status to the report file
+	 * 
+	 * @param stringToWrite - array To get Test Case number and Status
+	 * @throws IOException
+	 */
+	public static void writeToFile(String[] stringToWrite) throws IOException {
+		// Initialize PrintWriter
+		PrintWriter writer = new PrintWriter(new FileWriter(baseDirectory + "test-report.txt", true));
+
+		// Append-write Test Case, Status and date, format it.
+		writer.printf("|%s|%s|%s|%n", StringUtils.center(stringToWrite[0], 7), StringUtils.center(stringToWrite[1], 50),
+				StringUtils.center(stringToWrite[2], 22));
+
+		// Flush and close writer
+		writer.flush();
+		writer.close();
+	}
+	
+	/**
+	 * Gets current time
+	 * 
+	 * @return time
+	 */
+	public static String getTimeForFileName() {
+		Calendar rightNow = Calendar.getInstance();
+		return rightNow.get(Calendar.MONTH) + 1 + "" + rightNow.get(Calendar.DAY_OF_MONTH) + ""
+				+ rightNow.get(Calendar.YEAR) + "" + rightNow.get(Calendar.HOUR) + "" + rightNow.get(Calendar.MINUTE)
+				+ "" + rightNow.get(Calendar.SECOND);
+	}
+
+	/**
+	 * This function will take screenshot
+	 * 
+	 * @param webdriver    - WebDriver
+	 * @param fileWithPath - directory for file to be saved
+	 * @throws Exception
+	 */
+	public static void takeFullScreenShot(WebDriver webDriver, String directoryExt) throws Exception {
+		// Cast webDriver to a ScreenShot
+		TakesScreenshot scrShot = ((TakesScreenshot) webDriver);
+
+		// call getScreenshotAs method to have an image file
+		File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);
+
+		// Put file to your destination
+		File DestFile = new File(baseDirectory + directoryExt);
+
+		// Write and copy file to the destination
+		FileUtils.copyFile(SrcFile, DestFile);
+	}
+}

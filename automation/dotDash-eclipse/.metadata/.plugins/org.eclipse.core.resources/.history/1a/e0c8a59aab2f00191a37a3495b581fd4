@@ -1,0 +1,16 @@
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		IndividualProfile profile = IndividualProfile.getInstance();
+		profile.setEmail("fira.n92@gmail.com");
+		System.out.println(profile.isEmailValid());
+		
+		profile.writeReportHeader();
+		
+		
+
+	}
+
+}

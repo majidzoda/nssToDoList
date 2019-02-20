@@ -1,0 +1,126 @@
+/**
+ *  This class performs test on search functionality of platform
+ *  Author: Firdavsii Majidzoda
+ *  Date: Feb 13/ 2019
+ */
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class LogInPage extends Accessories {
+	// Fields
+	private static final String url = "https://dev.workmarket.com/login";		// Log in page URL
+	private static final String userName = "qa+candidatetest@workmarket.com"; 	// UserName
+	private static final String pass = "candidate123";							// Password
+	
+	// Chrome WebDriver
+	private WebDriver chromeWebDriver;
+	
+	// WebElements for Log In Page
+	private WebElement userNameTextField;
+	private WebElement passTextField;
+	private WebElement logInButton;
+	private WebElement findTalentLink;
+	private WebElement searchBar;
+	
+	
+	// Const
+	public LogInPage(WebDriver webDriver) throws Exception {
+		chromeWebDriver = webDriver;
+		
+		// Write header for the reports
+		writeReportHeader();
+		
+		// Load Log In Page and initialize WebElements
+		loadPageInitElements();
+		
+		// Log in given credentials
+		logInToAccount();
+		
+		// Search for talent with "test" target word
+		searchForTalent();
+		
+		// Close and quit WebDriver
+		chromeWebDriver.close();
+		chromeWebDriver.quit();
+	}
+	
+	/**
+	 * This method load Log In Page finds credentials WebElements 
+	 */
+	private void loadPageInitElements() {
+		// Load Log in main page
+		chromeWebDriver.get(url);
+
+		// Wait for page to load
+		chromeWebDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		// Init WebElements
+		userNameTextField = chromeWebDriver.findElement(By.name("userEmail"));
+		passTextField = chromeWebDriver.findElement(By.name("password"));
+		logInButton = chromeWebDriver.findElement(By.id("login_page_button"));
+	}
+	
+	/**
+	 * This method inputs account credentials and logs in to account
+	 */
+	private void logInToAccount() {
+		// Input username
+		inputTextWebElement(chromeWebDriver, userNameTextField, userName);
+		
+		// Input password
+		inputTextWebElement(chromeWebDriver, passTextField, pass);
+		
+		// Click Log in Button
+		clickOnWebElement(chromeWebDriver, logInButton);
+		
+		// Wait for page to load
+		chromeWebDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	}
+	
+	private void searchForTalent() throws Exception {
+		// Status holder
+		String status = "";
+		
+		// Get current time for file name and picture
+		String fileName = getTimeForFileName();
+		
+		// Find and click on "Find Talent" link
+		findTalentLink = chromeWebDriver.findElement(By.linkText("Find Talent"));
+		clickOnWebElement(chromeWebDriver, findTalentLink);
+		
+		// Find search bar and input "test" and search for matches
+		searchBar = chromeWebDriver.findElement(By.id("input-text"));
+		inputTextWebElement(chromeWebDriver, searchBar, "test");
+		inputTextWebElement(chromeWebDriver, searchBar, Keys.ENTER+"");
+		
+		// Wait for page to load
+		chromeWebDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		// Find the list
+		WebElement searchList = chromeWebDriver.findElement(By.id("search_results"));
+		
+		// List of profile cards
+		List<WebElement> divs = searchList.findElements(By.className("profile-card--details"));
+		
+		// Iterate over list
+		for (WebElement webElement : divs) {
+			if (!webElement.getText().toLowerCase().contains("test")) { // Check if cell in the list contains "test"
+				status = "Failed";  // Failed
+				break; // Break the loop
+			}
+			// Passed
+			status = "Passed";
+		}
+		
+		// Write report to the file
+		writeToFile(new String[] { "TC2.1", status,  fileName});
+		
+		// Take a screen shot
+		takeFullScreenShot(chromeWebDriver, "Test-results/TC2.1/TC2.1-" + fileName);
+	}
+}

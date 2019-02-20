@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename field &apos;reportDirectory&apos; in &apos;dotDash.MainClass&apos; to &apos;fullReportDirectory&apos;&#x0A;- Original project: &apos;dotDash&apos;&#x0A;- Original element: &apos;dotDash.MainClass.reportDirectory&apos;&#x0A;- Renamed element: &apos;dotDash.MainClass.fullReportDirectory&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" delegate="false" deprecate="false" description="Rename field &apos;reportDirectory&apos;" flags="589830" getter="false" id="org.eclipse.jdt.ui.rename.field" input="/src&lt;dotDash{MainClass.java[MainClass^reportDirectory" name="fullReportDirectory" references="true" setter="false" stamp="1548611611169" textual="false" version="1.0"/>
+</session>

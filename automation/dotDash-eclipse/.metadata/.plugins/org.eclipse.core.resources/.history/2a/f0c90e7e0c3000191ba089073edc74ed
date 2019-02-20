@@ -1,0 +1,86 @@
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class LogInPage extends Accessories {
+	private static final String url = "https://dev.workmarket.com/login";
+	private static final String userName = "qa+candidatetest@workmarket.com";
+	private static final String pass = "candidate123";
+	
+	private WebDriver chromeWebDriver;
+	
+	private WebElement userNameTextField;
+	private WebElement passTextField;
+	private WebElement logInButton;
+	private WebElement findTalentLink;
+	private WebElement searchBar;
+	
+	
+	
+	public LogInPage(WebDriver webDriver) throws IOException {
+		chromeWebDriver = webDriver;
+		
+		writeReportHeader();
+		
+		loadPageInitElements();
+		
+		logInToAccount();
+		
+		searchForTalent();
+		//
+		
+	}
+	
+	private void loadPageInitElements() {
+		// Load Log in main page
+		chromeWebDriver.get(url);
+
+		// Wait for page to load
+		chromeWebDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		// Init WebElements
+		userNameTextField = chromeWebDriver.findElement(By.name("userEmail"));
+		passTextField = chromeWebDriver.findElement(By.name("password"));
+		logInButton = chromeWebDriver.findElement(By.id("login_page_button"));
+	}
+	
+	private void logInToAccount() {
+		inputTextWebElement(chromeWebDriver, userNameTextField, userName);
+		inputTextWebElement(chromeWebDriver, passTextField, pass);
+		clickOnWebElement(chromeWebDriver, logInButton);
+		
+		// Wait for page to load
+		chromeWebDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		
+	}
+	
+	private void searchForTalent() {
+		findTalentLink = chromeWebDriver.findElement(By.linkText("Find Talent"));
+		clickOnWebElement(chromeWebDriver, findTalentLink);
+		
+		searchBar = chromeWebDriver.findElement(By.id("input-text"));
+		inputTextWebElement(chromeWebDriver, searchBar, "test");
+		inputTextWebElement(chromeWebDriver, searchBar, Keys.ENTER+"");
+		// Wait for page to load
+		chromeWebDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		WebElement searchList = chromeWebDriver.findElement(By.id("search_results"));
+		List<WebElement> divs = searchList.findElements(By.className("profile-card--details"));
+		chromeWebDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		System.out.println("My babe " + divs.size());
+		
+		for (WebElement webElement : divs) {
+			System.out.println(webElement.getText());
+			System.out.println();
+		}
+		
+
+	}
+}

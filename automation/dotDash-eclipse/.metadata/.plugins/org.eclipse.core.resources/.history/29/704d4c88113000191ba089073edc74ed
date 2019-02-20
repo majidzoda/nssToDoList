@@ -1,0 +1,27 @@
+import java.io.IOException;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class MainClass {
+	private static final String webDriverPath = "/Users/firdavsiimajidzoda/Documents/chromedriver";
+	
+	public static void main(String[] args) throws Exception {
+		System.setProperty("webdriver.chrome.driver", webDriverPath);
+		
+		// Initialize Web driver
+		WebDriver webDriver = new ChromeDriver();
+		// Sign Up Page Testing (Test Cases: 1.1 - 1.53)
+//		SignUpPage signUpPage = new SignUpPage(webDriver);	
+		
+		// Log in Page, testing searching functionality (Test Case: 2.1)
+		LogInPage logInPage = new LogInPage(webDriver);
+		
+		// Close and quit WebDriver
+		webDriver.close();
+		webDriver.quit();
+		
+
+	}
+
+}
